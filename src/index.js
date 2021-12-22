@@ -1,19 +1,23 @@
 import "./style.css";
 
 // const main = document.querySelector("main");
+const darkModeToggle = document.getElementById("darkmode-toggle");
 const preview = document.getElementById("preview");
 const detail = document.getElementById("detail");
 const back = document.getElementById("back");
+
+darkModeToggle.addEventListener("click", () => {
+  document.documentElement.classList.toggle("dark");
+});
 
 back.addEventListener("click", () => {
   Preview.close();
 });
 
 let urlAll = "https://restcountries.com/v2/all";
-// let urlAll = "https://restcountries.com/v3.1/all";
+
 function getData(url) {
   return new Promise((resolve, reject) => {
-    console.log("loading...");
     fetch(url)
       .then((response) => {
         return response.json();
@@ -88,7 +92,6 @@ class Preview {
     let numOfBorderCountries = this.borderCountries.childNodes.length;
     for (let i = 0; i < numOfBorderCountries; i++) {
       const child = this.borderCountries.childNodes[0];
-      console.log(child);
       child.remove();
     }
   }

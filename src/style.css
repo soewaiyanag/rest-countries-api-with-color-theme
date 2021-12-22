@@ -5,7 +5,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;600;800&display=swap");
 
 .box {
-  @apply bg-dark-blue-100 rounded-md overflow-hidden;
+  @apply transition-colors bg-white shadow rounded-md overflow-hidden dark:bg-dark-blue-100;
 }
 
 .box > .flag {
@@ -25,9 +25,17 @@
 }
 
 .box > .info > h2 > span {
-  @apply font-thin;
+  @apply font-medium;
 }
 
 .btn {
-  @apply shadow-xl active:shadow-none bg-dark-blue-100 px-8 py-1 rounded-md;
+  @apply transition-colors shadow-xl active:shadow-none dark:bg-dark-blue-100 px-8 py-1 rounded-md;
+}
+
+svg {
+  fill: #000;
+}
+
+.dark svg {
+  fill: #fff;
 }
