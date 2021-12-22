@@ -8,22 +8,26 @@
   @apply bg-dark-blue-100 rounded-md overflow-hidden;
 }
 
-.flag {
-  @apply w-full aspect-video object-fill;
+.box > .flag {
+  @apply w-full aspect-video object-fill cursor-pointer;
 }
 
-.info {
+.box > .info {
   @apply p-5 pb-10 space-y-0.5;
 }
 
-.info > h1 {
+.box > .info > h1 {
   @apply font-bold text-xl mb-3;
 }
 
-.info > h2 {
+.box > .info > h2 {
   @apply font-semibold;
 }
 
-.info > h2 > span {
+.box > .info > h2 > span {
   @apply font-thin;
+}
+
+.btn {
+  @apply shadow-xl active:shadow-none bg-dark-blue-100 px-8 py-1 rounded-md;
 }

@@ -6,9 +6,18 @@ module.exports = {
   entry: "./src/index.js",
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "bundle.js",
+    filename: "[name].bundle.js",
   },
-  plugins: [new HtmlWebpackPlugin({ template: "./src/index.html" })],
+  plugins: [
+    new HtmlWebpackPlugin({
+      filename: "index.html",
+      template: "./src/index.html",
+    }),
+    new HtmlWebpackPlugin({
+      filename: "preview",
+      template: "./src/preview.html",
+    }),
+  ],
   module: {
     rules: [
       {
