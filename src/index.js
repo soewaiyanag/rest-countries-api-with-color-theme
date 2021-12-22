@@ -13,8 +13,11 @@ let urlAll = "https://restcountries.com/v2/all";
 // let urlAll = "https://restcountries.com/v3.1/all";
 function getData(url) {
   return new Promise((resolve, reject) => {
+    console.log("loading...");
     fetch(url)
-      .then((response) => response.json())
+      .then((response) => {
+        return response.json();
+      })
       .then((data) => {
         resolve(data);
       });
@@ -81,12 +84,17 @@ class Preview {
   static clear() {
     this.currencies.innerText = "";
     this.languages.innerText = "";
-    this.borderCountries.childNodes.forEach((child) => {
+
+    let numOfBorderCountries = this.borderCountries.childNodes.length;
+    for (let i = 0; i < numOfBorderCountries; i++) {
+      const child = this.borderCountries.childNodes[0];
+      console.log(child);
       child.remove();
-    });
+    }
   }
 
   static show() {
+    this.clear();
     detail.classList.remove("hidden");
     preview.classList.add("hidden");
   }
