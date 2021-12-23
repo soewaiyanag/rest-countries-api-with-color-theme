@@ -5,7 +5,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;600;800&display=swap");
 
 .box {
-  @apply bg-white shadow rounded-md overflow-hidden dark:bg-dark-blue-100;
+  @apply bg-white shadow-lg rounded-md overflow-hidden dark:bg-dark-blue-100;
 }
 
 .box > .flag {

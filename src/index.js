@@ -10,6 +10,15 @@ const back = document.getElementById("back");
 window.onload = function () {
   Loading.show();
   setTimeout(Loading.close, 5000);
+
+  if (
+    localStorage.theme === "dark" ||
+    window.matchMedia("(prefers-color-scheme: dark)").matches
+  ) {
+    document.documentElement.classList.add("dark");
+  } else {
+    document.documentElement.classList.remove("dark");
+  }
 };
 
 darkModeToggle.addEventListener("click", () => {
