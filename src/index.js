@@ -70,8 +70,14 @@ class Preview {
               (countryData) => {
                 const borderCountryBtn = document.createElement("button");
                 borderCountryBtn.className = "btn";
+                borderCountryBtn.dataset.code = countryData.alpha3Code;
                 borderCountryBtn.textContent = countryData.name;
                 this.borderCountries.appendChild(borderCountryBtn);
+
+                borderCountryBtn.addEventListener("click", function () {
+                  Preview.add(this.dataset.code);
+                  Preview.show();
+                });
               }
             );
           });
