@@ -1,20 +1,34 @@
 import "./style.css";
 
 // const main = document.querySelector("main");
+const search = document.getElementById("search");
 const loading = document.getElementById("loading");
 const darkModeToggle = document.getElementById("darkmode-toggle");
+const grid = document.getElementById("grid");
 const preview = document.getElementById("preview");
 const detail = document.getElementById("detail");
 const back = document.getElementById("back");
+let countries, boxes;
+
+search.addEventListener("keyup", () => {
+  boxes.forEach((box) => {
+    if (
+      box.dataset.name.toLowerCase().search(search.value.toLowerCase()) !== -1
+    ) {
+      box.classList.remove("hidden");
+    } else {
+      box.classList.add("hidden");
+    }
+  });
+});
 
 window.onload = function () {
+  // show loading for 5s
   Loading.show();
   setTimeout(Loading.close, 5000);
 
-  if (
-    localStorage.theme === "dark" ||
-    window.matchMedia("(prefers-color-scheme: dark)").matches
-  ) {
+  // Choose them depend on user's prefer
+  if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
     document.documentElement.classList.add("dark");
   } else {
     document.documentElement.classList.remove("dark");
@@ -26,13 +40,13 @@ darkModeToggle.addEventListener("click", () => {
 });
 
 back.addEventListener("click", () => {
-  Preview.close();
+  Detail.close();
 });
 
-let urlAll = "https://restcountries.com/v2/all";
+let URLAll = "https://restcountries.com/v2/all";
 
 function getData(url) {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     fetch(url)
       .then((response) => {
         return response.json();
@@ -41,6 +55,59 @@ function getData(url) {
         resolve(data);
       });
   });
+}
+
+getData(URLAll).then((value) => {
+  countries = value;
+  countries.forEach((country) => {
+    Preview.show(country);
+  });
+  boxes = document.querySelectorAll(".box");
+});
+
+class Preview {
+  static show(country) {
+    // SELECTORS
+    const box = document.createElement("div");
+    const flagImg = document.createElement("img");
+    const info = document.createElement("div");
+
+    // MODIFY ELEMENTS
+    box.className = "box";
+    box.dataset.name = country.name;
+
+    flagImg.src = country.flags.svg;
+    flagImg.className = "flag";
+    flagImg.dataset.code = country.alpha3Code;
+
+    info.className = "info";
+    info.innerHTML = `
+        <h1 class="">${country.name}</h1>
+        <h2>
+        Population:
+            <span>${country.population ?? "unknown"}</span>
+        </h2>
+        <h2>
+        Region:
+            <span>${country.region ?? "unknown"}</span>
+        </h2>
+        <h2>
+        Capital:
+        <span>${country.capital ?? "unknown"}</span>
+        </h2>
+    `;
+
+    // SHOW ON UI
+    box.appendChild(flagImg);
+    box.appendChild(info);
+    grid.appendChild(box);
+
+    // ADD EVENT
+    flagImg.addEventListener("click", (e) => {
+      Detail.add(e.target.dataset.code);
+      Detail.show();
+    });
+  }
 }
 
 class Loading {
@@ -55,7 +122,7 @@ class Loading {
   }
 }
 
-class Preview {
+class Detail {
   // SELECTORS
   static flag = document.getElementById("flag");
   static name = document.getElementById("name");
@@ -147,46 +214,3 @@ class Preview {
     preview.classList.remove("hidden");
   }
 }
-
-getData(urlAll).then((value) => {
-  value.forEach((country) => {
-    // SELECTORS
-    const box = document.createElement("div");
-    const flagImg = document.createElement("img");
-    const info = document.createElement("div");
-
-    box.className = "box";
-
-    flagImg.src = country.flags.svg;
-    flagImg.className = "flag";
-    flagImg.dataset.code = country.alpha3Code;
-
-    info.className = "info";
-    info.innerHTML = `
-        <h1 class="">${country.name}</h1>
-        <h2>
-        Population:
-            <span>${country.population ?? "unknown"}</span>
-        </h2>
-        <h2>
-        Region:
-            <span>${country.region ?? "unknown"}</span>
-        </h2>
-        <h2>
-        Capital:
-        <span>${country.capital ?? "unknown"}</span>
-        </h2>
-    `;
-
-    // SHOW ON UI
-    box.appendChild(flagImg);
-    box.appendChild(info);
-    preview.appendChild(box);
-
-    // ADD EVENT
-    flagImg.addEventListener("click", (e) => {
-      Preview.add(e.target.dataset.code);
-      Preview.show();
-    });
-  });
-});
