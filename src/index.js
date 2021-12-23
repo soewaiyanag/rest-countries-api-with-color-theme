@@ -1,10 +1,16 @@
 import "./style.css";
 
 // const main = document.querySelector("main");
+const loading = document.getElementById("loading");
 const darkModeToggle = document.getElementById("darkmode-toggle");
 const preview = document.getElementById("preview");
 const detail = document.getElementById("detail");
 const back = document.getElementById("back");
+
+window.onload = function () {
+  Loading.show();
+  setTimeout(Loading.close, 5000);
+};
 
 darkModeToggle.addEventListener("click", () => {
   document.documentElement.classList.toggle("dark");
@@ -26,6 +32,18 @@ function getData(url) {
         resolve(data);
       });
   });
+}
+
+class Loading {
+  static show() {
+    loading.classList.remove("hidden");
+    document.body.style.overflowY = "hidden";
+  }
+
+  static close() {
+    loading.classList.add("hidden");
+    document.body.style.overflowY = "visible";
+  }
 }
 
 class Preview {
@@ -74,9 +92,13 @@ class Preview {
                 borderCountryBtn.textContent = countryData.name;
                 this.borderCountries.appendChild(borderCountryBtn);
 
-                borderCountryBtn.addEventListener("click", function () {
-                  Preview.add(this.dataset.code);
-                  Preview.show();
+                borderCountryBtn.addEventListener("click", (e) => {
+                  Loading.show();
+                  setTimeout(Loading.close, 3000);
+
+                  this.add(e.target.dataset.code);
+                  this.clear();
+                  this.show();
                 });
               }
             );
@@ -103,7 +125,9 @@ class Preview {
   }
 
   static show() {
-    this.clear();
+    Loading.show();
+    setTimeout(Loading.close, 3000);
+
     detail.classList.remove("hidden");
     preview.classList.add("hidden");
   }
@@ -150,9 +174,9 @@ getData(urlAll).then((value) => {
     box.appendChild(info);
     preview.appendChild(box);
 
-    // ADD EVENTS
-    flagImg.addEventListener("click", function () {
-      Preview.add(this.dataset.code);
+    // ADD EVENT
+    flagImg.addEventListener("click", (e) => {
+      Preview.add(e.target.dataset.code);
       Preview.show();
     });
   });
