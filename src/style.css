@@ -9,7 +9,7 @@
 }
 
 .box > .flag {
-  @apply w-full aspect-video object-fill cursor-pointer;
+  @apply w-full aspect-video object-cover object-center cursor-pointer;
 }
 
 .box > .info {
