@@ -2,6 +2,8 @@ import "./style.css";
 
 // const main = document.querySelector("main");
 const search = document.getElementById("search");
+const filterBtn = document.getElementById("filter-btn");
+const filterDropdown = document.getElementById("filter-dropdown");
 const loading = document.getElementById("loading");
 const darkModeToggle = document.getElementById("darkmode-toggle");
 const grid = document.getElementById("grid");
@@ -22,10 +24,14 @@ search.addEventListener("keyup", () => {
   });
 });
 
+filterBtn.addEventListener("click", () => {
+  filterDropdown.classList.toggle("hidden");
+});
+
 window.onload = function () {
   // show loading for 5s
-  Loading.show();
-  setTimeout(Loading.close, 5000);
+  // Loading.show();
+  // setTimeout(Loading.close, 5000);
 
   // Choose them depend on user's prefer
   if (window.matchMedia("(prefers-color-scheme: dark)").matches) {

@@ -71,15 +71,18 @@
     </section>
     <main class="relative">
       <section id="preview">
-        <section class="mt-10">
+        <aside class="mt-10 md:flex md:justify-between">
           <div
             class="
+              md:flex-1 md:max-w-lg
+              transition-[outline]
+              outline-1
               focus-within:outline
               px-2
               py-4
               mx-8
-              rounded
-              bg-white
+              rounded-md
+              shadow-md
               dark:bg-dark-blue-100
               flex
               gap-1
@@ -104,16 +107,122 @@
               id="search"
               class="
                 w-full
+                font-medium
                 outline-none
                 bg-transparent
                 text-dark-blue-300
                 dark:text-white
+                placeholder:text-dark-blue-300
+                dark:placeholder:text-white
               "
               type="text"
               placeholder="Search for a country..."
             />
           </div>
-        </section>
+          <div class="relative mx-8 mt-10 md:mt-0">
+            <button
+              id="filter-btn"
+              class="
+                rounded-md
+                shadow-md
+                active:shadow-none
+                dark:bg-dark-blue-100
+                w-56
+                px-6
+                py-4
+                flex
+                gap-2
+                items-center
+                justify-between
+              "
+            >
+              <span class="font-medium">Filter by Region </span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="inline-block w-3"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"
+                />
+              </svg>
+            </button>
+            <ul
+              id="filter-dropdown"
+              class="
+                top-16
+                absolute
+                rounded-md
+                shadow-md
+                active:shadow-none
+                dark:bg-dark-blue-100
+                w-56
+                py-2
+                hidden
+              "
+            >
+              <li
+                class="
+                  px-6
+                  py-1
+                  transition-colors
+                  cursor-pointer
+                  hover:bg-dark-blue-200
+                "
+              >
+                Africa
+              </li>
+              <li
+                class="
+                  px-6
+                  py-1
+                  transition-colors
+                  cursor-pointer
+                  hover:bg-dark-blue-200
+                "
+              >
+                America
+              </li>
+              <li
+                class="
+                  px-6
+                  py-1
+                  transition-colors
+                  cursor-pointer
+                  hover:bg-dark-blue-200
+                "
+              >
+                Asia
+              </li>
+              <li
+                class="
+                  px-6
+                  py-1
+                  transition-colors
+                  cursor-pointer
+                  hover:bg-dark-blue-200
+                "
+              >
+                Europe
+              </li>
+              <li
+                class="
+                  px-6
+                  py-1
+                  transition-colors
+                  cursor-pointer
+                  hover:bg-dark-blue-200
+                "
+              >
+                Oceania
+              </li>
+            </ul>
+          </div>
+        </aside>
         <div
           id="grid"
           class="p-8 grid gap-16 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"

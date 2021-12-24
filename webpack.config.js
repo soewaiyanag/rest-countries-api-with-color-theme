@@ -13,10 +13,6 @@ module.exports = {
       filename: "index.html",
       template: "./src/index.html",
     }),
-    new HtmlWebpackPlugin({
-      filename: "preview",
-      template: "./src/preview.html",
-    }),
   ],
   module: {
     rules: [
