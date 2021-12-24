@@ -1,9 +1,12 @@
 import "./style.css";
 
-// const main = document.querySelector("main");
+/* ---- SELECTORS ---- */
+
 const search = document.getElementById("search");
 const filterBtn = document.getElementById("filter-btn");
+const filterBtnText = filterBtn.querySelector("span");
 const filterDropdown = document.getElementById("filter-dropdown");
+const filterLists = document.querySelectorAll("#filter-dropdown > li");
 const loading = document.getElementById("loading");
 const darkModeToggle = document.getElementById("darkmode-toggle");
 const grid = document.getElementById("grid");
@@ -11,45 +14,11 @@ const preview = document.getElementById("preview");
 const detail = document.getElementById("detail");
 const back = document.getElementById("back");
 let countries, boxes;
-
-search.addEventListener("keyup", () => {
-  boxes.forEach((box) => {
-    if (
-      box.dataset.name.toLowerCase().search(search.value.toLowerCase()) !== -1
-    ) {
-      box.classList.remove("hidden");
-    } else {
-      box.classList.add("hidden");
-    }
-  });
-});
-
-filterBtn.addEventListener("click", () => {
-  filterDropdown.classList.toggle("hidden");
-});
-
-window.onload = function () {
-  // show loading for 5s
-  // Loading.show();
-  // setTimeout(Loading.close, 5000);
-
-  // Choose them depend on user's prefer
-  if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-    document.documentElement.classList.add("dark");
-  } else {
-    document.documentElement.classList.remove("dark");
-  }
-};
-
-darkModeToggle.addEventListener("click", () => {
-  document.documentElement.classList.toggle("dark");
-});
-
-back.addEventListener("click", () => {
-  Detail.close();
-});
-
+let filter = "";
+let input = "";
 let URLAll = "https://restcountries.com/v2/all";
+
+/* ---- FUNCTIONS ---- */
 
 function getData(url) {
   return new Promise((resolve) => {
@@ -63,6 +32,19 @@ function getData(url) {
   });
 }
 
+function filterFunc() {
+  boxes.forEach((box) => {
+    if (
+      box.dataset.name.search(input) !== -1 &&
+      box.dataset.region.search(filter) !== -1
+    ) {
+      box.classList.remove("hidden");
+    } else {
+      box.classList.add("hidden");
+    }
+  });
+}
+
 getData(URLAll).then((value) => {
   countries = value;
   countries.forEach((country) => {
@@ -71,6 +53,55 @@ getData(URLAll).then((value) => {
   boxes = document.querySelectorAll(".box");
 });
 
+/* ---- EVENT LISTENERS ---- */
+
+window.onload = function () {
+  // show loading for 5s
+  Loading.show();
+  setTimeout(Loading.close, 5000);
+
+  // Choose them depend on user's prefer
+  if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+    document.documentElement.classList.add("dark");
+  } else {
+    document.documentElement.classList.remove("dark");
+  }
+};
+
+search.addEventListener("keyup", () => {
+  input = search.value.toLowerCase();
+  filterFunc();
+});
+
+filterLists.forEach((filterList) => {
+  filterList.addEventListener("click", () => {
+    filterBtnText.innerText = filterList.innerText;
+    filter = filterList.dataset.filter;
+    filterFunc();
+  });
+});
+
+filterBtn.addEventListener("click", () => {
+  filterDropdown.classList.toggle("hidden");
+});
+
+filterBtn.addEventListener("focusout", () => {
+  setTimeout(() => {
+    if (!filterDropdown.classList.contains("hidden")) {
+      filterDropdown.classList.toggle("hidden");
+    }
+  }, 150);
+});
+
+darkModeToggle.addEventListener("click", () => {
+  document.documentElement.classList.toggle("dark");
+});
+
+back.addEventListener("click", () => {
+  Detail.close();
+});
+
+/* ---- CLASSES ---- */
 class Preview {
   static show(country) {
     // SELECTORS
@@ -80,7 +111,8 @@ class Preview {
 
     // MODIFY ELEMENTS
     box.className = "box";
-    box.dataset.name = country.name;
+    box.dataset.name = country.name.toLowerCase();
+    box.dataset.region = country.region.toLowerCase();
 
     flagImg.src = country.flags.svg;
     flagImg.className = "flag";

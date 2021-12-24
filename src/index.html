@@ -16,7 +16,15 @@
     "
   >
     <nav
-      class="p-6 shadow-sm bg-white dark:bg-dark-blue-100 flex justify-between"
+      class="
+        px-8
+        py-6
+        shadow-sm
+        bg-white
+        dark:bg-dark-blue-100
+        flex
+        justify-between
+      "
     >
       <h1 class="font-bold">Where in the world?</h1>
       <h1 id="darkmode-toggle" class="font-medium cursor-pointer select-none">
@@ -42,7 +50,6 @@
     <section
       id="loading"
       class="
-        mt-0
         fixed
         z-10
         inset-0
@@ -71,7 +78,7 @@
     </section>
     <main class="relative">
       <section id="preview">
-        <aside class="mt-10 md:flex md:justify-between">
+        <aside class="mt-10 mb-5 md:flex md:justify-between">
           <div
             class="
               md:flex-1 md:max-w-lg
@@ -166,6 +173,19 @@
               "
             >
               <li
+                data-filter=""
+                class="
+                  px-6
+                  py-1
+                  transition-colors
+                  cursor-pointer
+                  hover:bg-dark-blue-200
+                "
+              >
+                None
+              </li>
+              <li
+                data-filter="africa"
                 class="
                   px-6
                   py-1
@@ -177,6 +197,7 @@
                 Africa
               </li>
               <li
+                data-filter="america"
                 class="
                   px-6
                   py-1
@@ -188,6 +209,7 @@
                 America
               </li>
               <li
+                data-filter="asia"
                 class="
                   px-6
                   py-1
@@ -199,6 +221,7 @@
                 Asia
               </li>
               <li
+                data-filter="europe"
                 class="
                   px-6
                   py-1
@@ -210,6 +233,7 @@
                 Europe
               </li>
               <li
+                data-filter="oceania"
                 class="
                   px-6
                   py-1
