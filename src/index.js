@@ -1,4 +1,6 @@
 import "./style.css";
+import "core-js/stable";
+import "regenerator-runtime/runtime";
 
 /* ---- SELECTORS ---- */
 
@@ -18,18 +20,22 @@ let filter = "";
 let input = "";
 let URLAll = "https://restcountries.com/v2/all";
 
+/* ---- SHOW ON UI AFTER FETCHING DATA ---- */
+
+getData(URLAll).then((value) => {
+  countries = value;
+  countries.forEach((country) => {
+    Preview.show(country);
+  });
+  boxes = document.querySelectorAll(".box");
+});
+
 /* ---- FUNCTIONS ---- */
 
-function getData(url) {
-  return new Promise((resolve) => {
-    fetch(url)
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        resolve(data);
-      });
-  });
+async function getData(url) {
+  let response = await fetch(url);
+  let data = await response.json();
+  return data;
 }
 
 function filterFunc() {
@@ -44,14 +50,6 @@ function filterFunc() {
     }
   });
 }
-
-getData(URLAll).then((value) => {
-  countries = value;
-  countries.forEach((country) => {
-    Preview.show(country);
-  });
-  boxes = document.querySelectorAll(".box");
-});
 
 /* ---- EVENT LISTENERS ---- */
 
@@ -115,6 +113,7 @@ class Preview {
     box.dataset.region = country.region.toLowerCase();
 
     flagImg.src = country.flags.svg;
+    flagImg.alt = `Flag of ${country.name}`;
     flagImg.className = "flag";
     flagImg.dataset.code = country.alpha3Code;
 
@@ -175,56 +174,55 @@ class Detail {
   static borderCountries = document.getElementById("border-countries");
 
   // METHODS
-  static add(countryCode) {
-    getData(`https://restcountries.com/v2/alpha/${countryCode}`).then(
-      (value) => {
-        // SHOW ON UI
-        this.flag.src = value.flag;
-        this.name.innerText = value.name;
-        this.nativeName.innerText = value.nativeName;
-        this.population.innerText = value.population;
-        this.region.innerText = value.region;
-        this.subRegion.innerText = value.subregion;
-        this.capital.innerText = value.capital;
-        this.topLevelDomain.innerText = value.topLevelDomain;
-
-        value.currencies.forEach((currency) => {
-          currencies.innerText += currency.name;
-        });
-
-        value.languages.forEach((language) => {
-          languages.innerText += language.name;
-        });
-
-        if (value.borders !== undefined) {
-          value.borders.forEach((border) => {
-            getData(`https://restcountries.com/v2/alpha/${border}`).then(
-              (countryData) => {
-                const borderCountryBtn = document.createElement("button");
-                borderCountryBtn.className = "btn";
-                borderCountryBtn.dataset.code = countryData.alpha3Code;
-                borderCountryBtn.textContent = countryData.name;
-                this.borderCountries.appendChild(borderCountryBtn);
-
-                borderCountryBtn.addEventListener("click", (e) => {
-                  Loading.show();
-                  setTimeout(Loading.close, 3000);
-
-                  this.add(e.target.dataset.code);
-                  this.clear();
-                  this.show();
-                });
-              }
-            );
-          });
-        } else {
-          const borderCountryBtn = document.createElement("button");
-          borderCountryBtn.className = "btn";
-          borderCountryBtn.textContent = "None";
-          this.borderCountries.appendChild(borderCountryBtn);
-        }
-      }
+  static async add(countryCode) {
+    let value = await getData(
+      `https://restcountries.com/v2/alpha/${countryCode}`
     );
+    // SHOW ON UI
+    this.flag.src = value.flag;
+    this.name.innerText = value.name;
+    this.nativeName.innerText = value.nativeName;
+    this.population.innerText = value.population;
+    this.region.innerText = value.region;
+    this.subRegion.innerText = value.subregion;
+    this.capital.innerText = value.capital;
+    this.topLevelDomain.innerText = value.topLevelDomain;
+
+    value.currencies.forEach((currency) => {
+      currencies.innerText += currency.name;
+    });
+
+    value.languages.forEach((language) => {
+      languages.innerText += language.name;
+    });
+
+    if (value.borders !== undefined) {
+      value.borders.forEach((border) => {
+        getData(`https://restcountries.com/v2/alpha/${border}`).then(
+          (countryData) => {
+            const borderCountryBtn = document.createElement("button");
+            borderCountryBtn.className = "btn";
+            borderCountryBtn.dataset.code = countryData.alpha3Code;
+            borderCountryBtn.textContent = countryData.name;
+            this.borderCountries.appendChild(borderCountryBtn);
+
+            borderCountryBtn.addEventListener("click", (e) => {
+              Loading.show();
+              setTimeout(Loading.close, 3000);
+
+              this.add(e.target.dataset.code);
+              this.clear();
+              this.show();
+            });
+          }
+        );
+      });
+    } else {
+      const borderCountryBtn = document.createElement("button");
+      borderCountryBtn.className = "btn";
+      borderCountryBtn.textContent = "None";
+      this.borderCountries.appendChild(borderCountryBtn);
+    }
   }
 
   static clear() {
