@@ -12,15 +12,21 @@ const Card = ({ country }) => {
         <h1 className="font-bold text-xl mb-3">{country.name}</h1>
         <h2 className="font-semibold">
           Population:
-          <span className="font-medium">{country.population ?? "unknown"}</span>
+          <span className="font-medium ml-2">
+            {country.population ?? "unknown"}
+          </span>
         </h2>
         <h2 className="font-semibold">
           Region:
-          <span className="font-medium">{country.region ?? "unknown"}</span>
+          <span className="font-medium ml-2">
+            {country.region ?? "unknown"}
+          </span>
         </h2>
         <h2 className="font-semibold">
           Capital:
-          <span className="font-medium">{country.capital ?? "unknown"}</span>
+          <span className="font-medium ml-2">
+            {country.capital ?? "unknown"}
+          </span>
         </h2>
       </div>
     </div>
