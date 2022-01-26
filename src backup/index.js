@@ -24,10 +24,6 @@ let URLAll = "https://restcountries.com/v2/all";
 
 getData(URLAll).then((value) => {
   countries = value;
-  countries.forEach((country) => {
-    Preview.show(country);
-  });
-  boxes = document.querySelectorAll(".box");
 });
 
 /* ---- FUNCTIONS ---- */
@@ -119,19 +115,7 @@ class Preview {
 
     info.className = "info";
     info.innerHTML = `
-        <h1 class="">${country.name}</h1>
-        <h2>
-        Population:
-            <span>${country.population ?? "unknown"}</span>
-        </h2>
-        <h2>
-        Region:
-            <span>${country.region ?? "unknown"}</span>
-        </h2>
-        <h2>
-        Capital:
-        <span>${country.capital ?? "unknown"}</span>
-        </h2>
+        
     `;
 
     // SHOW ON UI
