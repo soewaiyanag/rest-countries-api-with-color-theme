@@ -3,26 +3,26 @@ const path = require("path");
 
 module.exports = {
   mode: "development",
-  entry: "./src/index.js",
+  entry: path.join(__dirname, "src", "index.js"),
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "[name].bundle.js",
   },
   plugins: [
     new HtmlWebpackPlugin({
       filename: "index.html",
-      template: "./src/index.html",
+      template: path.join(__dirname, "src", "index.html"),
     }),
   ],
   module: {
     rules: [
       {
-        test: /\.js$/i,
+        test: /\.?js$/,
         include: path.resolve(__dirname, "src"),
+        exclude: /node_modules/,
         use: {
           loader: "babel-loader",
           options: {
-            presets: ["@babel/preset-env"],
+            presets: ["@babel/preset-env", "@babel/preset-react"],
           },
         },
       },
