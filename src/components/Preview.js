@@ -1,22 +1,22 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import CountryContext from "../CountryContext";
 import { PreviewLoader } from "../loaders";
 
 const Preview = () => {
+  const countries = useContext(CountryContext);
+  const params = useParams();
+
   const getCountry = (alpha3Code) => {
     return (
       countries &&
       countries.find((country) => country.alpha3Code === alpha3Code)
     );
   };
-
-  const countries = useContext(CountryContext);
-  const country = getCountry("USA");
-  console.log(country);
+  const country = getCountry(params.countryCode);
   return country ? (
     <div className="py-10 px-4 ">
-      <button id="back" className="btn flex items-center">
+      <Link to="/" className="btn flex items-center max-w-fit">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="16"
@@ -31,7 +31,7 @@ const Preview = () => {
           />
         </svg>
         Back
-      </button>
+      </Link>
       <div className="mt-10 pb-10 md:grid md:grid-cols-[40%_1fr] md:gap-5">
         <img
           src={country && country.flags.svg}
@@ -90,14 +90,17 @@ const Preview = () => {
             Border countries:
           </h1>
           <div id="border-countries" className="text-sm flex gap-4 flex-wrap">
-            {country &&
-              country.borders.map((border) => {
-                return (
-                  <Link to={border} className="btn" key={"border" + border}>
-                    {getCountry(border).name}
+            {!!country.borders
+              ? country.borders.map((border) => (
+                  <Link
+                    className="btn"
+                    to={`/${border}`}
+                    key={"border" + border}
+                  >
+                    {border}
                   </Link>
-                );
-              })}
+                ))
+              : "No borders"}
           </div>
         </div>
       </div>

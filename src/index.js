@@ -20,9 +20,8 @@ ReactDOM.render(
   <BrowserRouter>
     <Routes>
       <Route path="/" element={<App />}>
-        {/* <Route path="/" element={<Main />} />
-        <Route path=":country" element={<Preview />} /> */}
-        <Route path="/" element={<Preview />} />
+        <Route path="/" element={<Main />} />
+        <Route path=":countryCode" element={<Preview />} />
       </Route>
     </Routes>
   </BrowserRouter>,

@@ -4,10 +4,9 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;600;800&display=swap");
 
-html,
-body,
-#root {
-  height: 100%;
+body {
+  @apply font-nunito bg-neutral-50 dark:bg-dark-blue-200
+        text-dark-blue-300 dark:text-white;
 }
 
 .btn {
