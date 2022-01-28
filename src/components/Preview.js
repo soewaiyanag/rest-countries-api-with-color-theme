@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 import CountryContext from "../CountryContext";
 import { PreviewLoader } from "../loaders";
 
@@ -86,16 +87,18 @@ const Preview = () => {
           </div>
 
           <h1 className="mt-10 mb-4 text-lg font-semibold inline-block w-full md:w-fit">
-            Border countries:{" "}
+            Border countries:
+          </h1>
+          <div id="border-countries" className="text-sm flex gap-4 flex-wrap">
             {country &&
               country.borders.map((border) => {
-                return getCountry(border).name;
+                return (
+                  <Link to={border} className="btn" key={"border" + border}>
+                    {getCountry(border).name}
+                  </Link>
+                );
               })}
-          </h1>
-          <div
-            id="border-countries"
-            className="text-sm flex gap-4 flex-wrap"
-          ></div>
+          </div>
         </div>
       </div>
     </div>
