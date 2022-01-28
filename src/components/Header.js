@@ -1,5 +1,6 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useRef } from "react";
 import FilterContext from "../FilterContext";
+import useClickOutside from "../hooks/onClickOutsite";
 
 const regions = ["All", "Africa", "America", "Asia", "Europe", "Oceania"];
 
@@ -30,6 +31,11 @@ const Filter = () => {
 const Header = () => {
   const [showFilter, setShowFilter] = useState(false);
   const { filter } = useContext(FilterContext);
+  const filterRef = useRef(null);
+
+  useClickOutside(filterRef, () => {
+    setShowFilter(false);
+  });
 
   return (
     <React.Fragment>
@@ -53,9 +59,11 @@ const Header = () => {
             placeholder="Search for a country..."
           />
         </div>
-        <div className="relative mx-8 mt-10 md:mt-0">
+        <div className="relative mx-8 mt-10 md:mt-0" ref={filterRef}>
           <button
-            className="rounded-md shadow active:shadow-none dark:bg-dark-blue-100 w-56 px-6 py-4 flex gap-2 items-center justify-between"
+            className="rounded-md shadow active:shadow-none dark:bg-dark-blue-100 w-56 
+                      px-6 py-4
+                      flex gap-2 items-center justify-between"
             onClick={() => {
               setShowFilter(!showFilter);
             }}
