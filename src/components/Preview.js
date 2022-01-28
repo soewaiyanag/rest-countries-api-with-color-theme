@@ -75,13 +75,21 @@ const Preview = () => {
               </h2>
               <h2 className="font-semibold">
                 Currencies:{" "}
-                {country && country.currencies.map((currency) => currency.name)}
-                <span id="currencies" className="font-thin"></span>
+                <span id="currencies" className="font-thin">
+                  {country.currencies &&
+                    country.currencies.map((currency, index) => {
+                      return index === 0 ? currency.name : `, ${currency.name}`;
+                    })}
+                </span>
               </h2>
               <h2 className="font-semibold">
                 Languages:{" "}
-                {country && country.languages.map((language) => language.name)}
-                <span id="languages" className="font-thin"></span>
+                <span id="languages" className="font-thin">
+                  {country.languages &&
+                    country.languages.map((language, index) => {
+                      return index === 0 ? language.name : `, ${language.name}`;
+                    })}
+                </span>
               </h2>
             </div>
           </div>
@@ -90,7 +98,7 @@ const Preview = () => {
             Border countries:
           </h1>
           <div id="border-countries" className="text-sm flex gap-4 flex-wrap">
-            {!!country.borders
+            {country.borders
               ? country.borders.map((border) => (
                   <Link
                     className="btn"
