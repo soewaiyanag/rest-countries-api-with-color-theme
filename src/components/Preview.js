@@ -33,44 +33,39 @@ const Preview = () => {
         Back
       </Link>
       <div className="mt-10 pb-10 md:grid md:grid-cols-[40%_1fr] md:gap-5">
-        <img
-          src={country && country.flags.svg}
-          id="flag"
-          className="w-full"
-          alt="flag"
-        />
+        <img src={country.flags.svg} id="flag" className="w-full" alt="flag" />
 
         <div>
           <h1 id="name" className="font-bold text-2xl my-6 md:mt-0">
-            {country && country.name}
+            {country.name}
           </h1>
 
           <div className="space-y-8 md:grid md:grid-cols-2">
             <div className="space-y-2">
               <h2 className="font-semibold">
-                Native Name: {country && country.nativeName}
+                Native Name: {country.nativeName}
                 <span id="native-name" className="font-thin"></span>
               </h2>
               <h2 className="font-semibold">
-                Population: {country && country.population}
+                Population: {country.population}
                 <span id="population" className="font-thin"></span>
               </h2>
               <h2 className="font-semibold">
-                Region: {country && country.region}
+                Region: {country.region}
                 <span id="region" className="font-thin"></span>
               </h2>
               <h2 className="font-semibold">
-                Sub Region:{country && country.subregion}
+                Sub Region: {country.subregion}
                 <span id="sub-region" className="font-thin"></span>
               </h2>
               <h2 className="font-semibold">
-                Capital:{country && country.capital}
+                Capital: {country.capital}
                 <span id="capital" className="font-thin"></span>
               </h2>
             </div>
             <div className="space-y-2">
               <h2 className="font-semibold">
-                Top Level Domain: {country && country.topLevelDomain}
+                Top Level Domain: {country.topLevelDomain}
                 <span id="top-level-domain" className="font-thin"></span>
               </h2>
               <h2 className="font-semibold">
@@ -105,7 +100,7 @@ const Preview = () => {
                     to={`/${border}`}
                     key={"border" + border}
                   >
-                    {border}
+                    {getCountry(border).name}
                   </Link>
                 ))
               : "No borders"}

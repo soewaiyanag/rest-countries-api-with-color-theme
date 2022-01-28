@@ -3,7 +3,7 @@ import React, { createContext, useState, useEffect } from "react";
 const CountryContext = createContext();
 
 export const CountryContextProvider = ({ children }) => {
-  const [countries, setCountries] = useState(undefined);
+  const [countries, setCountries] = useState([]);
 
   useEffect(() => {
     let URLAll = "https://restcountries.com/v2/all";

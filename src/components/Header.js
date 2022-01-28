@@ -1,24 +1,36 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import FilterContext from "../FilterContext";
 
-const regions = ["Africa", "America", "Asia", "Europe", "Oceania"];
+const regions = ["All", "Africa", "America", "Asia", "Europe", "Oceania"];
 
-const Filter = () => (
-  <ul className="top-16 absolute rounded-md shadow active:shadow-none dark:bg-dark-blue-100 w-56 py-2">
-    {regions.map((region, index) => {
-      return (
-        <li
-          className="px-6 py-1 transition-colors cursor-pointer bg-white hover:bg-gray-300 dark:hover:bg-dark-blue-200 dark:bg-dark-blue-100"
-          key={"region" + index}
-        >
-          {region}
-        </li>
-      );
-    })}
-  </ul>
-);
+const Filter = () => {
+  const { setFilter } = useContext(FilterContext);
+  return (
+    <ul
+      className="top-16 absolute rounded-md shadow active:shadow-none
+               dark:bg-dark-blue-100 w-56 py-2 animate-fadeIn"
+    >
+      {regions.map((region, index) => {
+        return (
+          <li
+            className="px-6 py-1 transition-colors cursor-pointer bg-white hover:bg-gray-300 dark:hover:bg-dark-blue-200 dark:bg-dark-blue-100"
+            key={"region" + index}
+            onClick={() => {
+              setFilter(region === "All" ? "" : region);
+            }}
+          >
+            {region}
+          </li>
+        );
+      })}
+    </ul>
+  );
+};
 
 const Header = () => {
   const [showFilter, setShowFilter] = useState(false);
+  const { filter } = useContext(FilterContext);
+
   return (
     <React.Fragment>
       <aside className="mt-10 mb-5 md:flex md:justify-between">
@@ -48,13 +60,18 @@ const Header = () => {
               setShowFilter(!showFilter);
             }}
           >
-            <span className="font-medium">Filter by Region </span>
+            <span className="font-medium">
+              {filter ? filter : "Filter by Region"}{" "}
+            </span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
               height="16"
               fill="currentColor"
-              className="inline-block w-3"
+              className="inline-block w-3 transition-transform"
+              style={{
+                transform: showFilter ? "rotate(180deg)" : "rotate(0deg)",
+              }}
               viewBox="0 0 16 16"
             >
               <path
