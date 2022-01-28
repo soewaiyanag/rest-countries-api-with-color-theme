@@ -1,5 +1,4 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
 
 const Nav = () => {
   return (
@@ -17,8 +16,10 @@ const Nav = () => {
       >
         <h1 className="font-bold">Where in the world?</h1>
         <h1
-          id="darkmode-toggle"
           className="font-medium cursor-pointer select-none"
+          onClick={() => {
+            document.documentElement.classList.toggle("dark");
+          }}
         >
           <svg
             aria-hidden="true"

@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import CountryContext from "../CountryContext";
 import FilterContext from "../FilterContext";
-import { FilterProvider } from "../FilterContext";
 import Header from "./Header";
 import Card from "./Card";
 
