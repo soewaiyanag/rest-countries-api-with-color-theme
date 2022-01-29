@@ -1,11 +1,12 @@
 import React, { useState, useContext, useRef } from "react";
 import FilterContext from "../FilterContext";
+import SearchContext from "../SearchContext";
 import useClickOutside from "../hooks/onClickOutsite";
 
 const regions = ["All", "Africa", "America", "Asia", "Europe", "Oceania"];
 
 const Filter = () => {
-  const { setFilter } = useContext(FilterContext);
+  const { handleFilter } = useContext(FilterContext);
   return (
     <ul
       className="top-16 absolute rounded-md shadow active:shadow-none
@@ -17,7 +18,7 @@ const Filter = () => {
             className="px-6 py-1 transition-colors cursor-pointer bg-white hover:bg-gray-300 dark:hover:bg-dark-blue-200 dark:bg-dark-blue-100"
             key={"region" + index}
             onClick={() => {
-              setFilter(region === "All" ? "" : region);
+              handleFilter(region === "All" ? "" : region);
             }}
           >
             {region}
@@ -31,6 +32,7 @@ const Filter = () => {
 const Header = () => {
   const [showFilter, setShowFilter] = useState(false);
   const { filter } = useContext(FilterContext);
+  const { search, handleSearch } = useContext(SearchContext);
   const filterRef = useRef(null);
 
   useClickOutside(filterRef, () => {
@@ -54,6 +56,8 @@ const Header = () => {
             </svg>
           </label>
           <input
+            value={search}
+            onChange={handleSearch}
             className="w-full font-medium outline-none bg-transparent text-dark-blue-300 dark:text-white placeholder:text-dark-blue-300 dark:placeholder:text-white"
             type="text"
             placeholder="Search for a country..."

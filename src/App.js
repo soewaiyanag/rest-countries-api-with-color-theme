@@ -1,17 +1,18 @@
 import React from "react";
 import Nav from "./components/Nav";
 import { CountryContextProvider } from "./CountryContext";
-import { Link, Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { FilterProvider } from "./FilterContext";
+import { SearchProvider } from "./SearchContext";
 const App = () => {
   return (
     <CountryContextProvider>
-      <FilterProvider>
-        <div>
+      <SearchProvider>
+        <FilterProvider>
           <Nav />
           <Outlet />
-        </div>
-      </FilterProvider>
+        </FilterProvider>
+      </SearchProvider>
     </CountryContextProvider>
   );
 };
